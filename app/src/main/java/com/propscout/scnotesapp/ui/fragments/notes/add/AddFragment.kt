@@ -1,20 +1,22 @@
 package com.propscout.scnotesapp.ui.fragments.notes.add
 
-import android.os.AsyncTask
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.propscout.scnotesapp.R
 import com.propscout.scnotesapp.db.Note
 import com.propscout.scnotesapp.db.NoteDatabase
+import com.propscout.scnotesapp.ui.fragments.BaseFragment
 import com.propscout.scnotesapp.ui.utils.toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AddFragment : Fragment() {
+class AddFragment : BaseFragment() {
 
     private lateinit var titleField: TextInputEditText
     private lateinit var contentField: TextInputEditText
@@ -57,7 +59,17 @@ class AddFragment : Fragment() {
 
             val note = Note(title, content)
 
-            saveNote(note)
+            /**
+             * Using a custom fragment life based Coroutine scope
+             */
+            launch {
+                NoteDatabase(requireContext()).getNoteDao().addNote(note)
+
+                withContext(Dispatchers.Main) {
+                    requireContext().toast(R.string.note_saved_message)
+                    clearCache()
+                }
+            }
 
         }
     }
@@ -70,32 +82,6 @@ class AddFragment : Fragment() {
     private fun clearCache() {
         titleField.setText("")
         contentField.setText("")
-    }
-
-    private fun saveNote(note: Note) {
-
-        class SaveNote : AsyncTask<Void, Void, Void>() {
-
-            override fun doInBackground(vararg params: Void?): Void? {
-
-                NoteDatabase(requireActivity()).getNoteDao().addNote(note)
-
-                return null
-            }
-
-            override fun onPostExecute(result: Void?) {
-
-                super.onPostExecute(result)
-
-                //Will be cool to check of they were no errors before showing a success toast but we'll just show it
-                requireContext().toast(R.string.note_saved_message)
-
-                clearCache()
-            }
-
-        }
-
-        SaveNote().execute()
     }
 
 }
