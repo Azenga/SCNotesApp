@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.propscout.scnotesapp.ui.fragments.notes.read.list.ListFragment"
+        android:label="@string/notes_text"
+        tools:layout="@layout/list_fragment">
+        <action
+            android:id="@+id/actionAddNote"
+            app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/actionShowNote"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/actionUpdateNote"
+            app:destination="@id/updateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.propscout.scnotesapp.ui.fragments.notes.add.AddFragment"
+        android:label="@string/create_note_text"
+        tools:layout="@layout/add_fragment" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.propscout.scnotesapp.ui.fragments.notes.read.details.DetailFragment"
+        android:label="@string/details_text"
+        tools:layout="@layout/detail_fragment">
+        <action
+            android:id="@+id/action_detailFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/actionBrowseNote"
+            app:destination="@id/listFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.propscout.scnotesapp.ui.fragments.notes.update.UpdateFragment"
+        android:label="@string/update_notes_text"
+        tools:layout="@layout/update_fragment" />
+</navigation>
