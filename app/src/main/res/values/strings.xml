@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SCNotesApp</string>
     <string name="app_title">Simplified Coding Notes Application</string>
-    <string name="title_hint">Enter Title..</string>
-    <string name="content_hint">Enter Content...</string>
+    <string name="title_hint">Enter Title…</string>
+    <string name="content_hint">Enter Content…</string>
     <string name="create_note_text">Create Note</string>
     <string name="save_note_text">Save Note</string>
     <string name="edit_note_text">Edit Note</string>
@@ -10,4 +10,5 @@
     <string name="notes_text">Notes</string>
     <string name="details_text">Details</string>
     <string name="update_notes_text">Update Notes</string>
+    <string name="note_saved_message">Note saved successfully</string>
 </resources>

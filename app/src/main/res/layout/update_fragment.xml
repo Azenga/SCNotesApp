@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="@string/title_hint" />
+            android:hint="@string/title_hint"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -43,7 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="@string/content_hint" />
+            android:hint="@string/content_hint"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
