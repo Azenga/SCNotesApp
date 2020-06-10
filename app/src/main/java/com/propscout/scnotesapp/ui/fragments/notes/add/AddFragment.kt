@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.propscout.scnotesapp.R
 import com.propscout.scnotesapp.db.Note
@@ -82,6 +84,9 @@ class AddFragment : BaseFragment() {
     private fun clearCache() {
         titleField.setText("")
         contentField.setText("")
+
+        findNavController().navigate(R.id.actionCheckNoteAdded)
+
     }
 
 }

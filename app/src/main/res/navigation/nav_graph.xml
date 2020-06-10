@@ -24,7 +24,11 @@
         android:id="@+id/addFragment"
         android:name="com.propscout.scnotesapp.ui.fragments.notes.add.AddFragment"
         android:label="@string/create_note_text"
-        tools:layout="@layout/add_fragment" />
+        tools:layout="@layout/add_fragment">
+        <action
+            android:id="@+id/actionCheckNoteAdded"
+            app:destination="@id/listFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.propscout.scnotesapp.ui.fragments.notes.read.details.DetailFragment"
