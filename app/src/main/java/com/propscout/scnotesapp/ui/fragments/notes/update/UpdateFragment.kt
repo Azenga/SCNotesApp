@@ -10,10 +10,6 @@ import com.propscout.scnotesapp.R
 
 class UpdateFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = UpdateFragment()
-    }
-
     private lateinit var viewModel: UpdateViewModel
 
     override fun onCreateView(

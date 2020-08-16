@@ -1,13 +1,16 @@
-package com.propscout.scnotesapp.db
+package com.propscout.scnotesapp.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.propscout.scnotesapp.data.db.dao.NoteDao
+import com.propscout.scnotesapp.data.db.entity.Note
 
 @Database(
     entities = [Note::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class NoteDatabase : RoomDatabase() {
 

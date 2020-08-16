@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.propscout.scnotesapp.R
-import com.propscout.scnotesapp.db.Note
-import com.propscout.scnotesapp.db.NoteDatabase
+import com.propscout.scnotesapp.data.db.entity.Note
 import com.propscout.scnotesapp.ui.fragments.BaseFragment
+import com.propscout.scnotesapp.ui.fragments.notes.NoteViewModel
+import com.propscout.scnotesapp.ui.fragments.notes.NoteViewModelProviderFactory
 import com.propscout.scnotesapp.ui.utils.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class AddFragment : BaseFragment() {
     private lateinit var titleField: TextInputEditText
     private lateinit var contentField: TextInputEditText
 
-    private lateinit var viewModel: AddViewModel
+    private lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +65,8 @@ class AddFragment : BaseFragment() {
              * Using a custom fragment life based Coroutine scope
              */
             launch {
-                NoteDatabase(requireContext()).getNoteDao().addNote(note)
+
+                viewModel.addNote(note)
 
                 withContext(Dispatchers.Main) {
                     requireContext().toast(R.string.note_saved_message)
@@ -78,7 +79,9 @@ class AddFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AddViewModel::class.java)
+        val factory = NoteViewModelProviderFactory(requireContext())
+
+        viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
     }
 
     private fun clearCache() {

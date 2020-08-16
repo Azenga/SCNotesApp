@@ -1,6 +1,8 @@
-package com.propscout.scnotesapp.db
+package com.propscout.scnotesapp.data.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.propscout.scnotesapp.data.db.entity.Note
 
 @Dao
 interface NoteDao {
@@ -9,17 +11,12 @@ interface NoteDao {
     suspend fun addNote(note: Note)
 
     @Query("SELECT * FROM note ORDER BY id DESC")
-    suspend fun getAllNotes(): List<Note>
-
-    @Query("SELECT * FROM note WHERE id = :id")
-    suspend fun getNoteById(id: Int)
+    fun getAllNotes(): LiveData<List<Note>>
 
     @Insert
     suspend fun addMultipleNotes(vararg note: Note)
 
-    @Update
-    suspend fun updateNote(note: Note)
-
     @Delete
-    suspend fun deleteItem(note: Note)
+    suspend fun deleteNote(note: Note)
+
 }

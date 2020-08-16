@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.propscout.scnotesapp.R
-import com.propscout.scnotesapp.db.Note
+import com.propscout.scnotesapp.data.db.entity.Note
+import com.propscout.scnotesapp.ui.fragments.notes.read.NoteItemClickedListener
 
-class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter(private val listener: NoteItemClickedListener) :
+    RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     var notesList: List<Note>? = null
         set(value) {
@@ -17,13 +19,21 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
         }
 
 
-    class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private var titleTextView = itemView.findViewById<TextView>(R.id.title_text_view)
+        private var contentTextView = itemView.findViewById<TextView>(R.id.content_text_view)
+
+        init {
+            itemView.setOnClickListener {
+                listener.itemClicked(notesList!![adapterPosition])
+            }
+        }
+
 
         fun populateViews(note: Note) {
-            itemView.findViewById<TextView>(R.id.title_text_view).text =
-                trimAndConcatenate(note.title)
-            itemView.findViewById<TextView>(R.id.content_text_view).text =
-                trimAndConcatenate(note.content, 72)
+            titleTextView.text = trimAndConcatenate(note.title)
+            contentTextView.text = trimAndConcatenate(note.content, 72)
         }
 
         private fun trimAndConcatenate(s: String, howManyChars: Int = 8) =
@@ -43,6 +53,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
     override fun getItemCount() = notesList?.size ?: 0
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        //Populate the fields
         holder.populateViews(notesList!![position])
     }
 }
